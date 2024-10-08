@@ -1,4 +1,4 @@
-package org.example;
+package org.fieldFabric;
 
 public class FieldParameters {
     protected char[][] field;

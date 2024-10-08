@@ -1,4 +1,4 @@
-package org.example;
+package org.fieldFabric;
 
 public class RuCharacters {
     static char[] letters = {'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К',

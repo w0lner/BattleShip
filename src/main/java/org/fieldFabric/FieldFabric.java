@@ -1,4 +1,4 @@
-package org.example;
+package org.fieldFabric;
 
 public class FieldFabric extends FieldParameters {
 
@@ -123,41 +123,48 @@ public class FieldFabric extends FieldParameters {
 
     }
 
-    public void makeDoubleField() {
+    public char[][] makeDoubleField() {
         DoubleFieldParameters doubleFieldParameters = new DoubleFieldParameters(this);
         char[][] doubleField = doubleFieldParameters.doubleField;
 
+        //Пишем отступ сверху
         for (int a1 = 0; a1 < amendmentY; a1++) {
             for (int a2 = 0; a2 < doubleFieldParameters.doubleTotalX; a2++) {
-                doubleField[a1][a2] = ' ';
+                doubleField[a1][a2] = '-';
             }
         }
+
+        //Пишем поле
         int startSecondField = doubleFieldParameters.startSecondField;
-        char[] secondBorders = makeBorders();
-        char[] secondSpaces = makeSpaces();
+        char[] spaces = makeSpaces();
+        char[] borders = makeBorders();
 
         for (int h = amendmentY; h < fieldY + amendmentY; h++) {
-            doubleField[h] = makeBorders();
-
-            for (int i = amendmentX + 1 + fieldX; i < startSecondField; i++) {
-                doubleField[h][i] = '#';
-                if (i + 1 >= startSecondField) {
-                    System.arraycopy(secondBorders,0,doubleField[h],i + 1, secondBorders.length);
-                }
-            }
+            //Пишем бордюры
+            doubleFieldPrinter(doubleFieldParameters.marginSpacingChar, doubleField,
+                    startSecondField, borders, h);
             for (int s = 0; s < lengthY; s++) {
                 h++;
                 if (h + 1 <= totalY) {
-                    doubleField[h] = makeSpaces();
-                    for (int i = amendmentX + 1 + fieldX; i < startSecondField; i++) {
-                        doubleField[h][i] = '#';
-                        if (i + 1 >= startSecondField) {
-                            System.arraycopy(secondSpaces,0,doubleField[h],i + 1, secondBorders.length);
-                        }
-                    }
+                    //Пишем пробелы
+                    doubleFieldPrinter(doubleFieldParameters.marginSpacingChar, doubleField,
+                            startSecondField, spaces, h);
                 }
             }
         }
+        return doubleField;
+    }
+
+    private void doubleFieldPrinter(char marginSpacingChar, char[][] doubleField,
+                                    int startSecondField, char[] charsString, int h) {
+
+        System.arraycopy(charsString,0,doubleField[h], 0, charsString.length);
+
+        for (int i = totalX; i < startSecondField; i++) {
+            doubleField[h][i] = marginSpacingChar;
+        }
+        System.arraycopy(charsString,amendmentX - digitX,doubleField[h],
+                startSecondField, charsString.length - amendmentX + digitX);
     }
 
     public void printField() {
