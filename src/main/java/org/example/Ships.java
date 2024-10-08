@@ -11,18 +11,16 @@ public class Ships {
     int amendmentY;
     int lengthX;
     int lengthY;
-    char[][] coordinates;
-    FieldParameters fieldParameters;
 
-    Ships(FieldParameters fieldParameters) {
-        this.field = fieldParameters.field;
-        this.lengthX = fieldParameters.lengthX;
-        this.lengthY = fieldParameters.lengthY;
-        this.amendmentX = fieldParameters.amendmentX;
-        this.amendmentY = fieldParameters.amendmentY;
-        this.cellCount = fieldParameters.cellCount;
-        this.countX = fieldParameters.countX;
-        this.countY = fieldParameters.countY;
+    Ships(FieldFabric fieldFabric) {
+        this.field = fieldFabric.field;
+        this.lengthX = fieldFabric.lengthX;
+        this.lengthY = fieldFabric.lengthY;
+        this.amendmentX = fieldFabric.amendmentX;
+        this.amendmentY = fieldFabric.amendmentY;
+        this.cellCount = fieldFabric.cellCount;
+        this.countX = fieldFabric.countX;
+        this.countY = fieldFabric.countY;
         countUpShipsWidth();
         countUpShipsHeight();
     }

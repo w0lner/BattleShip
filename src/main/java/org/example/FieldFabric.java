@@ -117,8 +117,60 @@ public class FieldFabric extends FieldParameters {
         }
     }
 
+    public void makeDoubleFiledV2() {
+        DoubleFieldParameters doubleFieldParameters = new DoubleFieldParameters(this);
+        char[][] doubleField = doubleFieldParameters.doubleField;
+
+    }
+
+    public void makeDoubleField() {
+        DoubleFieldParameters doubleFieldParameters = new DoubleFieldParameters(this);
+        char[][] doubleField = doubleFieldParameters.doubleField;
+
+        for (int a1 = 0; a1 < amendmentY; a1++) {
+            for (int a2 = 0; a2 < doubleFieldParameters.doubleTotalX; a2++) {
+                doubleField[a1][a2] = ' ';
+            }
+        }
+        int startSecondField = doubleFieldParameters.startSecondField;
+        char[] secondBorders = makeBorders();
+        char[] secondSpaces = makeSpaces();
+
+        for (int h = amendmentY; h < fieldY + amendmentY; h++) {
+            doubleField[h] = makeBorders();
+
+            for (int i = amendmentX + 1 + fieldX; i < startSecondField; i++) {
+                doubleField[h][i] = '#';
+                if (i + 1 >= startSecondField) {
+                    System.arraycopy(secondBorders,0,doubleField[h],i + 1, secondBorders.length);
+                }
+            }
+            for (int s = 0; s < lengthY; s++) {
+                h++;
+                if (h + 1 <= totalY) {
+                    doubleField[h] = makeSpaces();
+                    for (int i = amendmentX + 1 + fieldX; i < startSecondField; i++) {
+                        doubleField[h][i] = '#';
+                        if (i + 1 >= startSecondField) {
+                            System.arraycopy(secondSpaces,0,doubleField[h],i + 1, secondBorders.length);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void printField() {
         for (char[] string : field) {
+            for (char ch : string) {
+                System.out.print(ch);
+            }
+            System.out.println();
+        }
+    }
+
+    public void printDoubleField(char[][] doubleField) {
+        for (char[] string : doubleField) {
             for (char ch : string) {
                 System.out.print(ch);
             }
