@@ -1,11 +1,15 @@
 package org.example;
 
+import org.fieldFabric.DoubleFieldParameters;
+import org.fieldFabric.Field;
+import org.fieldFabric.FieldFabric;
+
 public class Main {
     public static void main(String[] args) {
-        FieldFabric field = new FieldFabric(10,10,6,2,0,0);
+        FieldFabric field = new FieldFabric(5, 5, 10, 2, 0, 0);
         DoubleFieldParameters doubleFieldParameters = new DoubleFieldParameters(field);
-        field.makeDoubleField();
-        field.printDoubleField();
+        Field field1 = new Field(field.makeDoubleField());
+        System.out.println(field1);
 
 
 

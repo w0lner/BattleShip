@@ -1,5 +1,7 @@
 package org.example;
 
+import org.fieldFabric.FieldFabric;
+
 public class Ships {
     char[][] field;
     int cellCount;

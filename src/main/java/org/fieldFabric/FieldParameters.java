@@ -1,10 +1,10 @@
 package org.fieldFabric;
 
 public class FieldParameters {
-    protected char[][] field;
+    public char[][] field;
     protected int countX;
     protected int countY;
-    protected int lengthX;
+    public int lengthX;
     protected int lengthY;
     protected int fieldX;
     protected int fieldY;
