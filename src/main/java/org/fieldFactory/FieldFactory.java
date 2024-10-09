@@ -1,9 +1,13 @@
-package org.fieldFabric;
+package org.fieldFactory;
 
-public class FieldFabric extends FieldParameters {
+import java.lang.reflect.Field;
 
-    public FieldFabric(int countX, int countY, int lengthX, int lengthY, int amendmentX, int amendmentY) {
-        super(countX, countY, lengthX, lengthY, amendmentX, amendmentY);
+public class FieldFactory {
+    private FieldParameters fieldParameters;
+    private DoubleFieldParameters doubleFieldParameters;
+
+    public FieldFactory(FieldParameters fieldParameters) {
+        this.fieldParameters = fieldParameters;
     }
 
     public void printMarkupY() {
@@ -48,75 +52,30 @@ public class FieldFabric extends FieldParameters {
         return coordinatesX;
     }
 
-    public char[] makeBorders() {
-        char[] borders = new char[totalX];
-        int error = -1;
-        for (int a = 0; a < amendmentX; a++) {
-            borders[a] = ' ';
-        }
-        for (int w = 1 + amendmentX; w <= totalX; w++) {
-            if (w == (1 + amendmentX) || (w + error - amendmentX) % lengthX == 0) {
-                borders[w - 1] = '+';
-                error++;
-            } else {
-                borders[w - 1] = '-';
-            }
-        }
-        return borders;
+//    public SingleField makeSingleField() {
+//        char[][] singleField = new char[fieldParameters.totalY][fieldParameters.totalX];
+//
+//        for (int a1 = 0; a1 < fieldParameters.amendmentY; a1++) {
+//            for (int a2 = 0; a2 < fieldParameters.totalX; a2++) {
+//                singleField[a1][a2] = fieldParameters.spaceSideways;
+//            }
+//        }
+//
+//        for (int h = fieldParameters.amendmentY; h < fieldParameters.fieldY + fieldParameters.amendmentY; h++) {
+//            singleField[h] = makeBorders();
+//            for (int s = 0; s < fieldParameters.lengthY; s++) {
+//                h++;
+//                if (h + 1 <= fieldParameters.totalY) {
+//                    singleField[h] = makeSpaces();
+//                }
+//            }
+//        }
+//        return new SingleField(singleField, fieldParameters);
+//    }
+
+    public Field makeSingleField() {
+        char[][] singleField = FieldPrinter.printSingleField(fieldParameters);
     }
-
-    public char[] makeSpaces() {
-        char[] spaces = new char[totalX];
-        int error = -1;
-        for (int a = 0; a < amendmentX; a++) {
-            spaces[a] = ' ';
-        }
-        for (int w = 1 + amendmentX; w <= totalX; w++) {
-            if (w == 1 || (w + error - amendmentX) % lengthX == 0) {
-                spaces[w - 1] = '|';
-                error++;
-            } else {
-                spaces[w - 1] = ' ';
-            }
-        }
-        return spaces;
-    }
-
-    public char[] printer(char spase, char filling, char innerSpase) {
-        char[] spaces = new char[totalX];
-        int error = -1;
-        for (int a = 0; a < amendmentX; a++) {
-            spaces[a] = spase;
-        }
-        for (int w = 1 + amendmentX; w <= totalX; w++) {
-            if (w == 1 || (w + error - amendmentX) % lengthX == 0) {
-                spaces[w - 1] = filling;
-                error++;
-            } else {
-                spaces[w - 1] = innerSpase;
-            }
-        }
-        return spaces;
-    }
-
-    public void makeField() {
-        for (int a1 = 0; a1 < amendmentY; a1++) {
-            for (int a2 = 0; a2 < totalX; a2++) {
-                field[a1][a2] = ' ';
-            }
-        }
-
-        for (int h = amendmentY; h < fieldY + amendmentY; h++) {
-            field[h] =  makeBorders();
-            for (int s = 0; s < lengthY; s++) {
-                h++;
-                if (h + 1 <= totalY) {
-                    field[h] = makeSpaces();
-                }
-            }
-        }
-    }
-
     public void makeDoubleFiledV2() {
         DoubleFieldParameters doubleFieldParameters = new DoubleFieldParameters(this);
         char[][] doubleField = doubleFieldParameters.doubleField;
@@ -184,6 +143,5 @@ public class FieldFabric extends FieldParameters {
             System.out.println();
         }
     }
-
 
 }

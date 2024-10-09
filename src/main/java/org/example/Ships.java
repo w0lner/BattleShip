@@ -1,6 +1,6 @@
 package org.example;
 
-import org.fieldFabric.FieldFabric;
+import org.fieldFactory.FieldFactory;
 
 public class Ships {
     char[][] field;
@@ -14,15 +14,15 @@ public class Ships {
     int lengthX;
     int lengthY;
 
-    Ships(FieldFabric fieldFabric) {
-        this.field = fieldFabric.field;
-        this.lengthX = fieldFabric.lengthX;
-        this.lengthY = fieldFabric.lengthY;
-        this.amendmentX = fieldFabric.amendmentX;
-        this.amendmentY = fieldFabric.amendmentY;
-        this.cellCount = fieldFabric.cellCount;
-        this.countX = fieldFabric.countX;
-        this.countY = fieldFabric.countY;
+    Ships(FieldFactory fieldFactory) {
+        this.field = fieldFactory.field;
+        this.lengthX = fieldFactory.lengthX;
+        this.lengthY = fieldFactory.lengthY;
+        this.amendmentX = fieldFactory.amendmentX;
+        this.amendmentY = fieldFactory.amendmentY;
+        this.cellCount = fieldFactory.cellCount;
+        this.countX = fieldFactory.countX;
+        this.countY = fieldFactory.countY;
         countUpShipsWidth();
         countUpShipsHeight();
     }

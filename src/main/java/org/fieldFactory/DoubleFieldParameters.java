@@ -1,4 +1,4 @@
-package org.fieldFabric;
+package org.fieldFactory;
 
 public class DoubleFieldParameters {
     int marginSpacing = 3;
@@ -17,9 +17,13 @@ public class DoubleFieldParameters {
         this.totalX = fieldParameters.totalX;
         this.amendmentX = fieldParameters.amendmentX;
         this.fieldX = fieldParameters.fieldX;
+        countUp();
+        this.doubleField = new char[fieldParameters.totalY][doubleTotalX];
+    }
+
+    private void countUp(){
         countUpDoubleTotalX();
         countUpStartSecondField();
-        this.doubleField = new char[fieldParameters.totalY][doubleTotalX];
     }
 
     private void countUpDoubleTotalX() {

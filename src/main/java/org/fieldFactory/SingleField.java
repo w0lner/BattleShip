@@ -1,10 +1,12 @@
-package org.fieldFabric;
+package org.fieldFactory;
 
-public class Field {
-    char[][] field;
+public class SingleField {
+     private char[][] field;
+     private FieldParameters fieldParameters;
 
-    public Field(char[][] field) {
+    public SingleField(char[][] field, FieldParameters fieldParameters) {
         this.field = field;
+        this.fieldParameters = fieldParameters;
     }
 
     public char[][] getField() {
@@ -13,6 +15,14 @@ public class Field {
 
     public void setField(char[][] field) {
         this.field = field;
+    }
+
+    public FieldParameters getFieldParameters() {
+        return fieldParameters;
+    }
+
+    public void setFieldParameters(FieldParameters fieldParameters) {
+        this.fieldParameters = fieldParameters;
     }
 
     @Override
