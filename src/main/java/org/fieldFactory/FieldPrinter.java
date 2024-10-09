@@ -22,7 +22,7 @@ public class FieldPrinter {
                 borders[w - 1] = getCrosshair();
                 error++;
             } else {
-                borders[w - 1] = getVerticalStick();
+                borders[w - 1] = getHorizontalStick();
             }
         }
         return borders;

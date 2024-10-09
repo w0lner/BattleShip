@@ -1,6 +1,8 @@
 package org.fieldFactory;
 
 public class FieldParameters {
+    protected char topSpace;
+    protected char sideSpace;
     protected int countX;
     protected int countY;
     protected int lengthX;
@@ -18,85 +20,6 @@ public class FieldParameters {
     protected char horizontalStick;
     protected char crosshair;
     protected char innerSpace;
-
-    public int getCountX() {
-        return countX;
-    }
-
-    public int getCountY() {
-        return countY;
-    }
-
-    public int getLengthX() {
-        return lengthX;
-    }
-
-    public int getLengthY() {
-        return lengthY;
-    }
-
-    public int getFieldX() {
-        return fieldX;
-    }
-
-    public int getFieldY() {
-        return fieldY;
-    }
-
-    public int getTotalX() {
-        return totalX;
-    }
-
-    public int getTotalY() {
-        return totalY;
-    }
-
-    public int getAmendmentX() {
-        return amendmentX;
-    }
-
-    public int getAmendmentY() {
-        return amendmentY;
-    }
-
-    public int getDigitY() {
-        return digitY;
-    }
-
-    public int getDigitX() {
-        return digitX;
-    }
-
-    public int getCellCount() {
-        return cellCount;
-    }
-
-    public char getVerticalStick() {
-        return verticalStick;
-    }
-
-    public char getHorizontalStick() {
-        return horizontalStick;
-    }
-
-    public char getInnerSpace() {
-        return innerSpace;
-    }
-
-    public char getTopSpace() {
-        return topSpace;
-    }
-
-    public char getCrosshair() {
-        return crosshair;
-    }
-
-    public char getSideSpace() {
-        return sideSpace;
-    }
-
-    protected char topSpace;
-    protected char sideSpace;
 
     public static class Builder {
         private final int countX;
@@ -211,5 +134,82 @@ public class FieldParameters {
     private void countUpAmendment() {
         this.amendmentY = this.amendmentY + digitY;
         this.amendmentX = this.amendmentX + digitX;
+    }
+
+
+    public int getCountX() {
+        return countX;
+    }
+
+    public int getCountY() {
+        return countY;
+    }
+
+    public int getLengthX() {
+        return lengthX;
+    }
+
+    public int getLengthY() {
+        return lengthY;
+    }
+
+    public int getFieldX() {
+        return fieldX;
+    }
+
+    public int getFieldY() {
+        return fieldY;
+    }
+
+    public int getTotalX() {
+        return totalX;
+    }
+
+    public int getTotalY() {
+        return totalY;
+    }
+
+    public int getAmendmentX() {
+        return amendmentX;
+    }
+
+    public int getAmendmentY() {
+        return amendmentY;
+    }
+
+    public int getDigitY() {
+        return digitY;
+    }
+
+    public int getDigitX() {
+        return digitX;
+    }
+
+    public int getCellCount() {
+        return cellCount;
+    }
+
+    public char getVerticalStick() {
+        return verticalStick;
+    }
+
+    public char getHorizontalStick() {
+        return horizontalStick;
+    }
+
+    public char getInnerSpace() {
+        return innerSpace;
+    }
+
+    public char getTopSpace() {
+        return topSpace;
+    }
+
+    public char getCrosshair() {
+        return crosshair;
+    }
+
+    public char getSideSpace() {
+        return sideSpace;
     }
 }

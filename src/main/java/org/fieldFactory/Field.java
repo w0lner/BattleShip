@@ -1,10 +1,10 @@
 package org.fieldFactory;
 
-public class SingleField {
+public class Field {
      private char[][] field;
      private FieldParameters fieldParameters;
 
-    public SingleField(char[][] field, FieldParameters fieldParameters) {
+    public Field(char[][] field, FieldParameters fieldParameters) {
         this.field = field;
         this.fieldParameters = fieldParameters;
     }

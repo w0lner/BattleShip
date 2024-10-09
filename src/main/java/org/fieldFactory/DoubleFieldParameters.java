@@ -1,24 +1,22 @@
 package org.fieldFactory;
 
 public class DoubleFieldParameters {
-    int marginSpacing = 3;
-    char marginSpacingChar = '*';
+    //Параметры одиночного поля
+    private FieldParameters fieldParameters;
     int totalX;
-    int startSecondField;
-
-    int doubleTotalX;
-    char[][] field;
-    char[][] doubleField;
     int amendmentX;
     int fieldX;
+    //Параметры двойного поля
+    int marginSpacing = 3;
+    char marginSpacingChar = '*';
+    int startSecondField;
+    int doubleTotalX;
 
     public DoubleFieldParameters(FieldParameters fieldParameters) {
-        this.field = fieldParameters.field;
-        this.totalX = fieldParameters.totalX;
+        this.fieldParameters = fieldParameters;
+        this.totalX = fieldParameters.getTotalX();
         this.amendmentX = fieldParameters.amendmentX;
-        this.fieldX = fieldParameters.fieldX;
         countUp();
-        this.doubleField = new char[fieldParameters.totalY][doubleTotalX];
     }
 
     private void countUp(){
@@ -32,9 +30,5 @@ public class DoubleFieldParameters {
 
     private void countUpStartSecondField() {
         this.startSecondField = marginSpacing + amendmentX + fieldX;
-    }
-
-    public char[][] getDoubleField() {
-        return this.doubleField;
     }
 }
