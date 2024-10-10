@@ -1,27 +1,29 @@
 package org.example;
 
-import org.fieldFactory.Field;
-import org.fieldFactory.FieldFactory;
-import org.fieldFactory.FieldParameters;
-import org.fieldFactory.FieldPrinter;
+import org.fieldFactory.*;
 
 public class Main {
     public static void main(String[] args) {
 
         FieldParameters fieldParameters1 =
                 new FieldParameters.Builder
-                        (6, 6, 5, 1)
+                        (6, 6, 10, 2)
                         .setAmendmentX(1)
                         .setAmendmentY(1)
+                        .build();
+        DoubleFieldParameters doubleFieldParameters1 =
+                new DoubleFieldParameters.Builder
+                        (fieldParameters1)
                         .build();
 
         FieldFactory fieldFactory = new FieldFactory(fieldParameters1);
         Field field1 = fieldFactory.makeSingleField();
         fieldFactory.markSingleField(field1);
         Ships ships = new Ships(field1);
-        ships.printShip(2,2,'о');
-        ships.printShip(2,3,'о');
-        ships.printShoot(2,3,'X');
+        ships.printShip(2,2);
+        ships.printShip(2,3);
+        ships.printShoot(2,3);
+
         System.out.println(field1);
 
 

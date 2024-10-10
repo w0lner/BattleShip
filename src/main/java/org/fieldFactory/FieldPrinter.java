@@ -67,4 +67,16 @@ public class FieldPrinter {
         }
         return singleField;
     }
+
+    public char[][] printDoubleField() {
+        char[][] doubleField = doubleFieldParameters.doubleField;
+
+        //Пишем отступ сверху
+        for (int a1 = 0; a1 < amendmentY; a1++) {
+            for (int a2 = 0; a2 < doubleFieldParameters.doubleTotalX; a2++) {
+                doubleField[a1][a2] = '-';
+            }
+        }
+        return
+    }
 }
