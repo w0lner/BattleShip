@@ -1,4 +1,4 @@
-package org.fieldFactory;
+package org.fieldsFactory;
 
 public class FieldParameters {
     protected char topSpace;

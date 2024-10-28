@@ -1,8 +1,11 @@
-package org.fieldFactory;
+package org.fieldsFactory;
+
+import lombok.Setter;
 
 public class FieldFactory {
 
-    private FieldParameters fieldParameters;
+    private final FieldParameters fieldParameters;
+    @Setter
     private DoubleFieldParameters doubleFieldParameters;
 
     public FieldFactory(FieldParameters fieldParameters) {
@@ -15,6 +18,15 @@ public class FieldFactory {
 
     public Field markSingleField(Field field) {
         return new FieldMarker(field).markSingleField();
+    }
+
+    public Field markDoubleField(Field field) {
+        return new FieldMarker(field, doubleFieldParameters).markDoubleField();
+    }
+
+    public Field makeDoubleField() {
+        return new Field(new FieldPrinter
+                (fieldParameters, doubleFieldParameters).printDoubleField(),fieldParameters, doubleFieldParameters);
     }
 
 //    public char[][] makeDoubleField() {
@@ -69,14 +81,5 @@ public class FieldFactory {
 //            System.out.println();
 //        }
 //    }
-
-    public void printDoubleField(char[][] doubleField) {
-        for (char[] string : doubleField) {
-            for (char ch : string) {
-                System.out.print(ch);
-            }
-            System.out.println();
-        }
-    }
 
 }

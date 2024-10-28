@@ -1,32 +1,44 @@
-package org.fieldFactory;
-
-import lombok.Builder;
-import lombok.experimental.Delegate;
+package org.fieldsFactory;
 
 public class DoubleFieldParameters {
-    //Параметры одиночного поля
-    @Delegate
-    private final FieldParameters fieldParameters;
-    //Параметры двойного поля
     private final int marginSpacing;
     private final char marginSpacingChar;
-    private int startSecondField;
-    private int doubleTotalX;
+    private final int startSecondField;
+    private final int doubleTotalX;
 
     private DoubleFieldParameters(Builder builder) {
-        this.fieldParameters = builder.fieldParameters;
+        this.startSecondField = builder.startSecondField;
+        this.doubleTotalX = builder.doubleTotalX;
         this.marginSpacing = builder.marginSpacing;
         this.marginSpacingChar = builder.marginSpacingChar;
-        countUp();
     }
 
     public static class Builder {
+        private int startSecondField;
+        private int doubleTotalX;
         private int marginSpacing = 3;
         private char marginSpacingChar = '*';
-        private final FieldParameters fieldParameters;
+        private final int fieldX;
+        private final int totalX;
+        private final int digitX;
 
         public Builder(FieldParameters fieldParameters) {
-            this.fieldParameters = fieldParameters;
+            this.fieldX = fieldParameters.fieldX;
+            this.totalX = fieldParameters.totalX;
+            this.digitX = fieldParameters.digitX;
+        }
+
+        private void countUp(){
+            countUpDoubleTotalX();
+            countUpStartSecondField();
+        }
+
+        private void countUpDoubleTotalX() {
+            this.doubleTotalX = totalX + fieldX + marginSpacing + digitX;
+        }
+
+        private void countUpStartSecondField() {
+            this.startSecondField = marginSpacing + totalX;
         }
 
         public Builder setMarginSpacing(int marginSpacing) {
@@ -40,26 +52,10 @@ public class DoubleFieldParameters {
         }
 
         public DoubleFieldParameters build() {
+            countUp();
             return new DoubleFieldParameters(this);
         }
 
-    }
-
-    private void countUp(){
-        countUpDoubleTotalX();
-        countUpStartSecondField();
-    }
-
-    private void countUpDoubleTotalX() {
-        this.doubleTotalX = getTotalX() * 2 + marginSpacing;
-    }
-
-    private void countUpStartSecondField() {
-        this.startSecondField = marginSpacing + getAmendmentX() + getFieldX();
-    }
-
-    public FieldParameters getFieldParameters() {
-        return fieldParameters;
     }
 
     public int getMarginSpacing() {

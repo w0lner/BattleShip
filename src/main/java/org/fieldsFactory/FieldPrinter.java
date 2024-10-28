@@ -1,4 +1,4 @@
-package org.fieldFactory;
+package org.fieldsFactory;
 
 import lombok.experimental.Delegate;
 
@@ -6,9 +6,16 @@ public class FieldPrinter {
 
     @Delegate
     private FieldParameters fieldParameters;
+    @Delegate
+    private DoubleFieldParameters doubleFieldParameters;
 
     public FieldPrinter(FieldParameters fieldParameters) {
         this.fieldParameters = fieldParameters;
+    }
+
+    public FieldPrinter(FieldParameters fieldParameters, DoubleFieldParameters doubleFieldParameters) {
+        this.fieldParameters = fieldParameters;
+        this.doubleFieldParameters = doubleFieldParameters;
     }
 
     public char[] printBorders() {
@@ -69,14 +76,37 @@ public class FieldPrinter {
     }
 
     public char[][] printDoubleField() {
-        char[][] doubleField = doubleFieldParameters.doubleField;
-
+        char[][] doubleField = new char[getTotalY()][getDoubleTotalX()];
         //Пишем отступ сверху
-        for (int a1 = 0; a1 < amendmentY; a1++) {
-            for (int a2 = 0; a2 < doubleFieldParameters.doubleTotalX; a2++) {
-                doubleField[a1][a2] = '-';
+        for (int a1 = 0; a1 < getAmendmentY(); a1++) {
+            for (int a2 = 0; a2 < getDoubleTotalX(); a2++) {
+                doubleField[a1][a2] = getTopSpace();
             }
         }
-        return
+        //Пишем поле
+        char[] borders = printBorders();
+        char[] spaces = printSpaces();
+
+        for (int h = getAmendmentY(); h < getFieldY() + getAmendmentY(); h++) {
+            //Пишем бордюры
+            doubleStringPrinter(doubleField, borders, h);
+            for (int s = 0; s < getLengthY(); s++) {
+                h++;
+                if (h + 1 <= getTotalY()) {
+                    //Пишем пробелы
+                    doubleStringPrinter(doubleField, spaces, h);
+                }
+            }
+        }
+        return doubleField;
+    }
+
+    private void doubleStringPrinter(char[][] doubleField, char[] charString, int h) {
+        System.arraycopy(charString,0,doubleField[h], 0, charString.length);
+        for (int i = getTotalX(); i < getStartSecondField(); i++) {
+            doubleField[h][i] = getMarginSpacingChar();
+        }
+        System.arraycopy(charString,getAmendmentX() - getDigitX(), doubleField[h],
+                getStartSecondField(), charString.length - getAmendmentX() + getDigitX());
     }
 }
