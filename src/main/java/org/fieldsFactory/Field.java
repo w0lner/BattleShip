@@ -2,18 +2,9 @@ package org.fieldsFactory;
 
 public class Field {
      private char[][] field;
-     private FieldParameters fieldParameters;
-     private DoubleFieldParameters doubleFieldParameters;
 
-    public Field(char[][] field, FieldParameters fieldParameters) {
+    public Field(char[][] field) {
         this.field = field;
-        this.fieldParameters = fieldParameters;
-    }
-
-    public Field(char[][] field, FieldParameters fieldParameters, DoubleFieldParameters doubleFieldParameters) {
-        this.field = field;
-        this.fieldParameters = fieldParameters;
-        this.doubleFieldParameters = doubleFieldParameters;
     }
 
     public char[][] getField() {
@@ -22,22 +13,6 @@ public class Field {
 
     public void setField(char[][] field) {
         this.field = field;
-    }
-
-    public FieldParameters getFieldParameters() {
-        return fieldParameters;
-    }
-
-    public void setFieldParameters(FieldParameters fieldParameters) {
-        this.fieldParameters = fieldParameters;
-    }
-
-    public DoubleFieldParameters getDoubleFieldParameters() {
-        return doubleFieldParameters;
-    }
-
-    public void setDoubleFieldParameters(DoubleFieldParameters doubleFieldParameters) {
-        this.doubleFieldParameters = doubleFieldParameters;
     }
 
     @Override

@@ -1,12 +1,12 @@
 package org.shipsFactory;
 
 import lombok.experimental.Delegate;
+import org.Utilityes.Position;
 import org.fieldsFactory.DoubleFieldParameters;
 import org.fieldsFactory.Field;
 import org.fieldsFactory.FieldParameters;
 
-public class Ships {
-    private final Field field;
+public class ShipPrinter {
     @Delegate
     private FieldParameters fieldParameters;
     @Delegate
@@ -16,10 +16,9 @@ public class Ships {
     private final char charX = 'X';
     private final char charo = 'о';
 
-    public Ships(Field field) {
-        this.field = field;
-        this.fieldParameters = field.getFieldParameters();
-        this.doubleFieldParameters = field.getDoubleFieldParameters();
+    public ShipPrinter(FieldParameters fieldParameters, DoubleFieldParameters doubleFieldParameters) {
+        this.fieldParameters = fieldParameters;
+        this.doubleFieldParameters = doubleFieldParameters;
         countUp();
     }
 
@@ -44,15 +43,18 @@ public class Ships {
         }
     }
 
-    public void printHit(int fieldNumber, int cellX, int cellY) {
-        shootPrinter(fieldNumber, cellY, cellX, charX);
+    public void printHit(Field field, int fieldNumber, Position position) {
+        shootPrinter(field, fieldNumber, position, charX);
     }
 
-    public void printMiss(int fieldNumber,int cellX, int cellY) {
-        shootPrinter(fieldNumber, cellY, cellX, charo);
+    public void printMiss(Field field, int fieldNumber, Position position) {
+        shootPrinter(field, fieldNumber, position, charo);
     }
 
-    private void shootPrinter(int fieldNumber, int cellY, int cellX, char charo) {
+    private void shootPrinter(Field field, int fieldNumber, Position position, char charo) {
+        int cellX = position.x();
+        int cellY = position.y();
+
         int y = getAmendmentY() - (getLengthY() / 2) + getLengthY() * cellY;
         int x = shootX(fieldNumber, cellX);
         int errorY = -1 + cellY;
@@ -64,15 +66,17 @@ public class Ships {
         }
     }
 
-    public void createShip(int fieldNumber, int cellX, int cellY) {
-        shipPrinter(fieldNumber, cellY, cellX, charo);
+    public void printShip(Field field, int fieldNumber, Position position) {
+        shipPrinter(field, fieldNumber, position, charo);
     }
 
-    public void destroyShip(int fieldNumber, int cellX, int cellY) {
-        shipPrinter(fieldNumber, cellY, cellX, charX);
+    public void printDestroyedShip(Field field, int fieldNumber, Position position) {
+        shipPrinter(field, fieldNumber, position, charX);
     }
 
-    private void shipPrinter(int fieldNumber, int cellX, int cellY, char ch) {
+    private void shipPrinter(Field field, int fieldNumber, Position position, char ch) {
+        int cellX = position.x();
+        int cellY = position.y();
         int y = getAmendmentY() + ((cellY - 1) * getLengthY());
         int x = shipX(fieldNumber, cellX);
         int errorY = cellY - 1;

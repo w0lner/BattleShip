@@ -1,6 +1,7 @@
 package org.FleetFactory;
 
 
+import org.GameMaster.GameSettings;
 import org.Utilityes.PathMaker;
 import org.Utilityes.Position;
 
@@ -9,8 +10,6 @@ import java.util.Set;
 
 public class Inspector {
     private final Fleet fleet;
-    private int minShipSize = 1;
-    private int maxShipSize = 4;
     private final HashSet<Position> closeZone;
     private final HashSet<String> shipNames;
 
@@ -70,7 +69,9 @@ public class Inspector {
 //        return !b;
     }
 
-    public boolean inspectShipSize(Integer shipSize, int decksLeft) {
+    public boolean inspectShipSize(Integer shipSize, int decksLeft, GameSettings gameSettings) {
+        int min = gameSettings.getMinShipLength();
+        int max = gameSettings.getMaxShipLength();
         if (shipSize == null) {
             System.out.println("Что то ты не то ввел, вводи цифру!");
             return false;
@@ -79,15 +80,24 @@ public class Inspector {
             System.out.println("У тебя не осталось столько палуб! Осталось: " + decksLeft);
             return false;
         }
-        if (shipSize > maxShipSize) {
-            System.out.println("Максимальное количество палуб: " + maxShipSize);
+        if (shipSize > max) {
+            System.out.println("Максимальное количество палуб: " + max);
             return false;
         }
-        if (shipSize < minShipSize) {
-            System.out.println("Минимальное количество палуб: " + minShipSize);
+        if (shipSize < min) {
+            System.out.println("Минимальное количество палуб: " + min);
             return false;
         }
         return true;
+    }
+
+    public boolean inspectFieldSize(Position position) {
+        if (position.x() > 30 || position.y() > 30) {
+            System.out.println("Поле слишком большое! максимальный размер поля: 30 на 30");
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public void extendCloseZone(Ship ship) {

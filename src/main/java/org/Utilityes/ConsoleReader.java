@@ -55,4 +55,24 @@ public class ConsoleReader {
         return scanner.nextLine();
     }
 
+    public static boolean yesOrNot() {
+        String s;
+        while (true) {
+            s = readLine().toLowerCase();
+            switch (s) {
+                case "да":
+                    return true;
+                case "нет":
+                    return false;
+                default:
+                    System.out.println("Я не понял да или нет?");
+            }
+        }
+    }
+
+    public static boolean presenceCheck() {
+        scanner.nextLine();
+        return true;
+    }
+
 }

@@ -1,17 +1,46 @@
 package org.GameMaster;
-
-
 import org.FleetFactory.Fleet;
+import org.FleetFactory.InfoForPrinter;
+import org.Utilityes.Position;
+import org.fieldsFactory.Field;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
     private String playerName;
-    private int fleetSize;
     private Fleet fleet;
+    private int fleetSize;
+    private Field singleField;
+    private Field doubleField;
+    private List<Position> shootsFired;
 
     public Player(String playerName, int fleetSize) {
+        this.shootsFired = new ArrayList<>();
         this.playerName = playerName;
         this.fleetSize = fleetSize;
         this.fleet = new Fleet();
+    }
+
+    public InfoForPrinter hit(Position position) {
+        return fleet.hitFleet(position);
+    }
+
+
+    public void setSingleField(Field singleField) {
+        this.singleField = singleField;
+    }
+
+    public void setDoubleField(Field doubleField) {
+        this.doubleField = doubleField;
+    }
+
+    public Field getSingleField() {
+        return singleField;
+    }
+
+    public Field getDoubleField() {
+        return doubleField;
     }
 
     public String getPlayerName() {
@@ -36,5 +65,9 @@ public class Player {
 
     public void setFleet(Fleet fleet) {
         this.fleet = fleet;
+    }
+
+    public List<Position> getShootsFired() {
+        return shootsFired;
     }
 }

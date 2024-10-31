@@ -9,17 +9,12 @@ public class FieldMarker {
     @Delegate
     private DoubleFieldParameters doubleFieldParameters;
 
-    FieldMarker(Field field) {
-        this.field = field;
-        this.fieldParameters = field.getFieldParameters();
-    }
-
-    FieldMarker(Field field, DoubleFieldParameters doubleFieldParameters) {
-        this(field);
+    FieldMarker(FieldParameters fieldParameters, DoubleFieldParameters doubleFieldParameters) {
+        this.fieldParameters = fieldParameters;
         this.doubleFieldParameters = doubleFieldParameters;
     }
 
-    public void printMarkupY(int fieldNumber) {
+    private void printMarkupY(int fieldNumber) {
         int[][] coordinatesY;
         if (fieldNumber == 1) {
             coordinatesY = firstCoordinatesY();
@@ -41,7 +36,7 @@ public class FieldMarker {
         }
     }
 
-    public void printMarkupX(int fieldNumber) {
+    private void printMarkupX(int fieldNumber) {
         int[][] coordinatesX;
         if (fieldNumber == 1) {
             coordinatesX = firstCoordinatesX();
@@ -55,7 +50,7 @@ public class FieldMarker {
         }
     }
 
-    public int[][] firstCoordinatesY() {
+    private int[][] firstCoordinatesY() {
         int periodicity = getFieldY() / getCountY();
         int[][] coordinatesY = new int[getCountY()][2];
         for (int number = 0; number < getCountY(); number++) {
@@ -65,7 +60,7 @@ public class FieldMarker {
         return coordinatesY;
     }
 
-    public int[][] firstCoordinatesX() {
+    private int[][] firstCoordinatesX() {
         int periodicity = getFieldX() / (getCountX() + 1);
         int[][] coordinatesX = new int[getCountX() + 1][2];
         for (int number = 0; number < getCountX() + 1; number++) {
@@ -75,7 +70,7 @@ public class FieldMarker {
         return coordinatesX;
     }
 
-    public int[][] secondCoordinatesX() {
+    private int[][] secondCoordinatesX() {
         int periodicity = getFieldX() / (getCountX() + 1);
         int[][] coordinatesX = new int[getCountX() + 1][2];
         for (int number = 0; number < getCountX() + 1; number++) {
@@ -86,7 +81,7 @@ public class FieldMarker {
         return coordinatesX;
     }
 
-    public int[][] secondCoordinatesY() {
+    private int[][] secondCoordinatesY() {
         int periodicity = getFieldY() / getCountY();
         int[][] coordinatesY = new int[getCountY()][2];
         for (int number = 0; number < getCountY(); number++) {
@@ -96,15 +91,23 @@ public class FieldMarker {
         return coordinatesY;
     }
 
-    public Field markSingleField() {
+    private void setField(Field field) {
+        this.field = field;
+    }
+
+    public Field markSingleField(Field field) {
+        setField(field);
         printMarkupY(1);
         printMarkupX(1);
         return field;
     }
 
-    public Field markDoubleField() {
+    public Field markDoubleField(Field field) {
+        setField(field);
         printMarkupY(2);
         printMarkupX(2);
-        return markSingleField();
+        printMarkupY(1);
+        printMarkupX(1);
+        return field;
     }
 }

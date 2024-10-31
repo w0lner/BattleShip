@@ -9,10 +9,6 @@ public class FieldPrinter {
     @Delegate
     private DoubleFieldParameters doubleFieldParameters;
 
-    public FieldPrinter(FieldParameters fieldParameters) {
-        this.fieldParameters = fieldParameters;
-    }
-
     public FieldPrinter(FieldParameters fieldParameters, DoubleFieldParameters doubleFieldParameters) {
         this.fieldParameters = fieldParameters;
         this.doubleFieldParameters = doubleFieldParameters;
@@ -50,6 +46,15 @@ public class FieldPrinter {
             }
         }
         return spaces;
+    }
+
+    private void doubleStringPrinter(char[][] doubleField, char[] charString, int h) {
+        System.arraycopy(charString,0,doubleField[h], 0, charString.length);
+        for (int i = getTotalX(); i < getStartSecondField(); i++) {
+            doubleField[h][i] = getMarginSpacingChar();
+        }
+        System.arraycopy(charString,getAmendmentX() - getDigitX(), doubleField[h],
+                getStartSecondField(), charString.length - getAmendmentX() + getDigitX());
     }
 
     public char[][] printSingleField() {
@@ -99,14 +104,5 @@ public class FieldPrinter {
             }
         }
         return doubleField;
-    }
-
-    private void doubleStringPrinter(char[][] doubleField, char[] charString, int h) {
-        System.arraycopy(charString,0,doubleField[h], 0, charString.length);
-        for (int i = getTotalX(); i < getStartSecondField(); i++) {
-            doubleField[h][i] = getMarginSpacingChar();
-        }
-        System.arraycopy(charString,getAmendmentX() - getDigitX(), doubleField[h],
-                getStartSecondField(), charString.length - getAmendmentX() + getDigitX());
     }
 }

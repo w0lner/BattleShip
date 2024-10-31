@@ -1,28 +1,21 @@
-package org.example;
+import org.FleetFactory.InfoForPrinter;
+import org.GameMaster.GameMaster;
+import org.GameMaster.Turn;
+import org.Utilityes.Position;
+import org.observer.Listener;
+import org.observer.Source;
 
-import org.fieldsFactory.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Main {
-    public static void main(String[] args) {
+public static void main(String[] args) {
+    GameMaster gameMaster = new GameMaster();
+    gameMaster.run();
 
-        FieldParameters fieldParameters1 =
-                new FieldParameters.Builder
-                        (10, 9, 5, 1)
-                        .setAmendmentX(3)
-                        .setAmendmentY(1)
-                        .build();
-        DoubleFieldParameters doubleFieldParameters1 =
-                new DoubleFieldParameters.Builder
-                        (fieldParameters1)
-                        .setMarginSpacing(1)
-                        .setMarginSpacingChar(' ')
-                        .build();
-
-        FieldFactory fieldFactory = new FieldFactory(fieldParameters1);
-        fieldFactory.setDoubleFieldParameters(doubleFieldParameters1);
-        Field field1 = fieldFactory.makeDoubleField();
-        fieldFactory.markDoubleField(field1);
-
-        System.out.println(field1);
-    }
+//    Turn turn = new Turn(3);
+//    for (int i = 0; i < 10; i++) {
+//        System.out.println("Ход игрока: " + turn.playerNumber());
+//        System.out.println("против игрока: " + turn.playerNumberAgainst());
+//        System.out.println();
+//    }
 }

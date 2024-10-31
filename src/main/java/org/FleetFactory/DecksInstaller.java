@@ -1,7 +1,10 @@
 package org.FleetFactory;
+import org.GameMaster.Player;
 import org.Utilityes.PathMaker;
 import org.Utilityes.Plate;
 import org.Utilityes.Position;
+import org.shipsFactory.ShipPrinter;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -16,8 +19,12 @@ public class DecksInstaller {
     private int decksLeft;
     private Plate plate;
     private final Inspector inspector;
+    private final ShipPrinter shipPrinter;
+    private final Player player;
 
-    public DecksInstaller(Ship ship, Inspector inspector) {
+    public DecksInstaller(Ship ship, Inspector inspector, ShipPrinter shipPrinter, Player player) {
+        this.player = player;
+        this.shipPrinter = shipPrinter;
         this.ship = ship;
         this.installedDecks = ship.getPositionList();
         this.decksLeft = ship.getDecksNumber();
@@ -69,7 +76,7 @@ public class DecksInstaller {
             if (way.contains(position)) {
                 installDeck(position);
             } else {
-                System.out.println("Палуба: " + position + " слишком далеко от корабля!");
+                System.out.println("Палуба: " + position + " не стыкуется с кораблем!");
                 System.out.println("Оставшиеся допустимые позиции: \n" + way);
             }
         }
@@ -97,6 +104,8 @@ public class DecksInstaller {
         } else {
             installedDecks.add(position);
             decksLeft--;
+            shipPrinter.printShip(player.getSingleField(),1, position);
+            shipPrinter.printShip(player.getDoubleField(),1, position);
             System.out.println("Палуба: " + position + " установлена!");
             if (decksLeft == 0) {
                 complete();

@@ -17,7 +17,7 @@ public class DoubleFieldParameters {
         private int startSecondField;
         private int doubleTotalX;
         private int marginSpacing = 3;
-        private char marginSpacingChar = '*';
+        private char marginSpacingChar = ' ';
         private final int fieldX;
         private final int totalX;
         private final int digitX;
