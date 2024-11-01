@@ -1,4 +1,5 @@
 package org.FleetFactory;
+
 import org.GameMaster.Player;
 import org.Utilityes.PathMaker;
 import org.Utilityes.Plate;
@@ -8,9 +9,6 @@ import org.shipsFactory.ShipPrinter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-
-
 
 
 public class DecksInstaller {
@@ -36,13 +34,12 @@ public class DecksInstaller {
             installFirstDeck(position);
         } else if (installedDecks.size() == 1) {
             installSecondDeck(position);
-        } else if (installedDecks.size() == 2){
+        } else if (installedDecks.size() == 2) {
             installThirdDeck(position);
         } else {
             installOtherDecks(position);
         }
     }
-
 
     public void installFirstDeck(Position position) {
         installDeck(position);
@@ -104,8 +101,8 @@ public class DecksInstaller {
         } else {
             installedDecks.add(position);
             decksLeft--;
-            shipPrinter.printShip(player.getSingleField(),1, position);
-            shipPrinter.printShip(player.getDoubleField(),1, position);
+            shipPrinter.printShip(player.getSingleField(), 1, position);
+            shipPrinter.printShip(player.getDoubleField(), 1, position);
             System.out.println("Палуба: " + position + " установлена!");
             if (decksLeft == 0) {
                 complete();

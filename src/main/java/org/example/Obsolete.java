@@ -89,3 +89,23 @@ package org.example;//Устаревшее
 //            System.out.println();
 //        }
 //    }
+
+//    public void inspectShip(List<Utilityes.Position> positionList) {
+//        int decksNumber = positionList.size() - 1;
+//        for (int i = 1; i < positionList.size(); i++) {
+//            Utilityes.Position p2 = positionList.get(i);
+//            Utilityes.Position p = positionList.get(i - 1);
+//            Map<Utilityes.Position, Utilityes.Direction> ways = Utilityes.PathMaker.makeRightPath(p, decksNumber);
+//            if (ways.containsKey(p2)) {
+//                System.out.println("Палуба " + p2 + " расположилась " + ways.get(p2));
+//            } else {
+//                Map<Utilityes.Position, Utilityes.Direction> wrongWays = Utilityes.PathMaker.makeSidePath(p, decksNumber);
+//                if (wrongWays.containsKey(p2)) {
+//                    System.out.println("Палуба " + p2 + " расположилась боком " + wrongWays.get(p2));
+//                } else {
+//                    System.out.println("Палуба " + p2 + " находится отдельно от корабля!");
+//                }
+//            }
+//            decksNumber--;
+//        }
+//    }

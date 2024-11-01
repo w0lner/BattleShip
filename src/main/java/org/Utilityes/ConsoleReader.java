@@ -11,12 +11,12 @@ public class ConsoleReader {
     private static final Scanner scanner;
 
     static {
-        two = Pattern.compile("(\\d+) (\\d+)");
+        two = Pattern.compile("(\\d+) +(\\d+)");
         one = Pattern.compile("(\\d+)");
         scanner = new Scanner(System.in);
     }
 
-    public static Position readPos() {
+    public static Position readCoordinate() {
         String s = scanner.nextLine();
         char ch = RuCharacters.getRuCharFromString(s);
         int x;
@@ -37,6 +37,20 @@ public class ConsoleReader {
             } else {
                 return null;
             }
+        }
+        return new Position(x, y);
+    }
+
+    public static Position readTwoNum() {
+        String s = scanner.nextLine();
+        Matcher matcher2 = two.matcher(s);
+        int x;
+        int y;
+        if (matcher2.find()) {
+            x = Integer.parseInt(matcher2.group(1));
+            y = Integer.parseInt(matcher2.group(2));
+        } else {
+            return null;
         }
         return new Position(x, y);
     }

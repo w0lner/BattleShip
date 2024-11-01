@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.Utilityes.Position;
 import org.fieldsFactory.DoubleFieldParameters;
 import org.fieldsFactory.FieldParameters;
-import org.fieldsFactory.PreparedForms;
+import org.fieldsFactory.PreparedFieldForm;
 
 import java.util.*;
 
@@ -16,7 +16,7 @@ public class GameSettings {
     @Getter
     private Position fieldSize;
     @Getter
-    private PreparedForms preparedForms;
+    private PreparedFieldForm preparedFieldForm;
     @Getter
     private String gameMode;
     @Getter
@@ -36,15 +36,6 @@ public class GameSettings {
     }
 
 
-    public static boolean checkName(String s) {
-        for (Player p : players) {
-            if (p.getPlayerName().equals(s)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public static void addPlayer(Player player) {
         players.add(player);
     }
@@ -59,7 +50,7 @@ public class GameSettings {
     }
 
     public void setFieldParam() {
-        this.fieldParameters = preparedForms.get(fieldSize.x(), fieldSize.y(), preparedForms);
+        this.fieldParameters = preparedFieldForm.getFieldParameters(fieldSize.x(), fieldSize.y(), preparedFieldForm);
         setDoubleFieldParam();
     }
 

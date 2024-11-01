@@ -10,10 +10,9 @@ public class Game {
         this.gameHost.setFieldSize(gameSettings.getFieldSize());
         this.gameHost.setShipPrinter(shipPrinter);
         this.gameHost.setTurn(new Turn(gameSettings.getPlayersList().size()));
-        start();
     }
 
-    private void start() {
+    public void start() {
         play();
     }
 

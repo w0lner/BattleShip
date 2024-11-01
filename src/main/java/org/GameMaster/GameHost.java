@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.FleetFactory.InfoForPrinter;
 import org.Utilityes.ConsoleReader;
+import org.Utilityes.MassageKeeper;
 import org.Utilityes.Position;
 import org.fieldsFactory.Field;
 import org.shipsFactory.ShipPrinter;
@@ -17,11 +18,14 @@ public class GameHost {
     private List<Player> players;
     private ShipPrinter shipPrinter;
     private Turn turn;
+    private MassageKeeper massageKeeper = new MassageKeeper();
 
     public void turnAnnouncer() {
         Player player = players.get(turn.playerNumber() - 1);
-        System.out.println("Ход игрока \"" + player.getPlayerName() + "\"");
-        System.out.println(player.getPlayerName() + " тут? Введи любой символ");
+
+        massageKeeper.add("Ход игрока \"" + player.getPlayerName() + "\"");
+        massageKeeper.add(player.getPlayerName() + " тут? Введи любой символ");
+        massageKeeper.print();
         ConsoleReader.presenceCheck();
         move(player);
     }
@@ -64,7 +68,7 @@ public class GameHost {
     public Position getShoot(Player player) {
         Position position;
         while (true) {
-            position = ConsoleReader.readPos();
+            position = ConsoleReader.readCoordinate();
             if (position == null) {
                 continue;
             }

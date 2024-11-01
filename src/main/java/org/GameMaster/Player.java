@@ -6,6 +6,7 @@ import org.fieldsFactory.Field;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Player {
     private String playerName;
@@ -69,5 +70,18 @@ public class Player {
 
     public List<Position> getShootsFired() {
         return shootsFired;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(playerName, player.playerName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(playerName);
     }
 }
