@@ -5,13 +5,14 @@ import org.Utilityes.Position;
 
 import java.util.ArrayList;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Ship {
     private final String shipName;
     private int decksNumber;
-    private List<Position> positionList;
+    private final List<Position> positionList;
     private boolean condition = true;
 
     public Ship(String shipName, int decksNumber) {
@@ -20,21 +21,31 @@ public class Ship {
         this.positionList = new ArrayList<>();
     }
 
-    public void destroyShip() {
-        this.condition = false;
+    public InfoForPrinter destroyShip() {
         System.out.println("Корабль \"" + shipName + "\" уничтожен!");
+        return new InfoForPrinter(positionList, condition);
     }
 
-    public void hitShip(Position position) {
+    public InfoForPrinter hitShip(Position position) {
         if (positionList.contains(position)) {
-            positionList.remove(position);
-            if (!positionList.isEmpty()) {
+            hit();
+            if (!(decksNumber <= 0)) {
                 System.out.println("Попадение по кораблю \"" + shipName + "\" выстрелом: " + position);
+                return new InfoForPrinter(Collections.singletonList(position), condition);
             } else {
-                destroyShip();
+                return destroyShip();
             }
         } else {
             System.out.println("У корабля \"" + shipName + "\" нет позиции: " + position);
+            return new InfoForPrinter(Collections.emptyList(), condition);
+        }
+    }
+
+
+    private void hit() {
+        decksNumber--;
+        if (decksNumber <= 0) {
+            condition = false;
         }
     }
 
