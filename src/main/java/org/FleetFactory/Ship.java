@@ -18,7 +18,7 @@ public class Ship {
     public Ship(String shipName, int decksNumber) {
         this.decksNumber = decksNumber;
         this.shipName = shipName;
-        this.positionList = new ArrayList<>();
+        this.positionList = new ArrayList<>(decksNumber);
     }
 
     public InfoForPrinter destroyShip() {
@@ -71,6 +71,10 @@ public class Ship {
 
     public List<Position> getPositionList() {
         return positionList;
+    }
+
+    public void setPositionList(List<Position> positionList) {
+        this.positionList.addAll(positionList);
     }
 
     @Override

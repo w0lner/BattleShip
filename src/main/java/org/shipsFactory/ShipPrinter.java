@@ -1,6 +1,7 @@
 package org.shipsFactory;
 
 import lombok.experimental.Delegate;
+import org.FleetFactory.Fleet;
 import org.Utilityes.Position;
 import org.fieldsFactory.DoubleFieldParameters;
 import org.fieldsFactory.Field;
@@ -8,9 +9,9 @@ import org.fieldsFactory.FieldParameters;
 
 public class ShipPrinter {
     @Delegate
-    private FieldParameters fieldParameters;
+    private final FieldParameters fieldParameters;
     @Delegate
-    private DoubleFieldParameters doubleFieldParameters;
+    private final DoubleFieldParameters doubleFieldParameters;
     private int shipsWidth;
     private int shipsHeight;
     private final char charX = 'X';
@@ -108,6 +109,12 @@ public class ShipPrinter {
                     getStartSecondField() - getAmendmentX() + getDigitX();
         } else {
             throw new RuntimeException("Номер поля может быть только 1 или 2");
+        }
+    }
+
+    public void printFleet(Field field, Fleet fleet) {
+        for (Position position : fleet.getFleetMap().keySet()) {
+            printShip(field, 1, position);
         }
     }
 }

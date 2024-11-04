@@ -45,8 +45,8 @@ public class Inspector {
     }
 
     public boolean inspectShipSize(Integer shipSize, int decksLeft, GameSettings gameSettings) {
-        int min = gameSettings.getMinShipLength();
-        int max = gameSettings.getMaxShipLength();
+        int min = gameSettings.getMinShipSize();
+        int max = gameSettings.getMaxShipSize();
         if (shipSize == null) {
             System.out.println("Что то ты не то ввел, вводи цифру!");
             return false;

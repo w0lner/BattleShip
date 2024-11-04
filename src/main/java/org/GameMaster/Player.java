@@ -14,7 +14,7 @@ public class Player {
     private int fleetSize;
     private Field singleField;
     private Field doubleField;
-    private List<Position> shootsFired;
+    private final List<Position> shootsFired;
 
     public Player(String playerName, int fleetSize) {
         this.shootsFired = new ArrayList<>();

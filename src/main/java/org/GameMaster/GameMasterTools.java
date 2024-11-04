@@ -5,8 +5,14 @@ import org.Utilityes.Position;
 import org.fieldsFactory.PreparedFieldForm;
 
 import java.util.List;
+import java.util.Random;
 
 public class GameMasterTools {
+
+    public static int getRandomInt(int min, int max) {
+        Random random = new Random();
+        return random.nextInt((max - min) + 1) + min;
+    }
 
     public static PreparedFieldForm getFieldScale() {
         String fieldScale;
@@ -86,7 +92,7 @@ public class GameMasterTools {
                 System.out.println("Имя должно содержать символы!");
                 continue;
             }
-            if (checkName(players, playerName)) {
+            if (!checkName(players, playerName)) {
                 System.out.println("Имя \"" + playerName + "\" уже занято!");
                 continue;
             }
@@ -102,7 +108,6 @@ public class GameMasterTools {
         }
         return true;
     }
-
 
     public static int getFleetSize() {
         Integer fleetHealth;
@@ -123,12 +128,6 @@ public class GameMasterTools {
             }
         }
     }
-
-
-
-
-
-
 
     public static Position readCoordinate() {
         Position position;

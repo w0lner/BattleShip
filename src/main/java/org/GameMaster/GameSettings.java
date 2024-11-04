@@ -22,9 +22,9 @@ public class GameSettings {
     @Getter
     private int positionsLimit;
     @Getter
-    private int minShipLength = 1;
+    private int minShipSize = 1;
     @Getter
-    private int maxShipLength = 4;
+    private int maxShipSize = 4;
     @Getter
     private FieldParameters fieldParameters;
     @Getter

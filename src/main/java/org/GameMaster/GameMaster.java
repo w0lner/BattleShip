@@ -125,5 +125,4 @@ public class GameMaster {
         bot.setDoubleField(fieldFactory.getDoubleField());
         System.out.println("Бот \"" + botName + "\"" + " создан!");
     }
-
 }
