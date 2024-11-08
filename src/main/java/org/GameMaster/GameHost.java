@@ -6,6 +6,7 @@ import org.FleetFactory.InfoForPrinter;
 import org.Utilityes.ConsoleReader;
 import org.Utilityes.MassageKeeper;
 import org.Utilityes.Position;
+import org.Utilityes.RuCharacters;
 import org.fieldsFactory.Field;
 import org.shipsFactory.ShipPrinter;
 
@@ -22,15 +23,30 @@ public class GameHost {
 
     public void turnAnnouncer() {
         Player player = players.get(turn.playerNumber() - 1);
+        if (player.isBot()) {
+            botMove(player);
+        } else {
+            massageKeeper.add("Ход игрока \"" + player.getPlayerName() + "\"");
+            massageKeeper.add(player.getPlayerName() + " тут? Введи любой символ");
+            massageKeeper.print();
+            massageKeeper.clean();
+            ConsoleReader.presenceCheck();
+            move(player);
+        }
+    }
 
-        massageKeeper.add("Ход игрока \"" + player.getPlayerName() + "\"");
-        massageKeeper.add(player.getPlayerName() + " тут? Введи любой символ");
-        massageKeeper.print();
-        ConsoleReader.presenceCheck();
-        move(player);
+    public void botMove(Player bot) {
+        massageKeeper.clean();
+        Player enemy = players.get(turn.playerNumberAgainst() - 1);
+        bot.botShot(enemy);
+        Position position = bot.getBotLastShot();
+        InfoForPrinter infoForPrinter = bot.botLastInfo();
+        printShoots(bot, enemy, infoForPrinter, position);
     }
 
     public void move(Player player) {
+        massageKeeper.print();
+        massageKeeper.clean();
         GameTranslator.showDoubleField(player);
         Player enemy = players.get(turn.playerNumberAgainst() - 1);
         System.out.println("Твой выстрел:");
@@ -38,29 +54,50 @@ public class GameHost {
         InfoForPrinter infoForPrinter = enemy.hit(position);
         printShoots(player, enemy, infoForPrinter, position);
         GameTranslator.showDoubleField(player);
-        GameTranslator.clearConsole();
-        if (!enemy.getFleet().getCondition()) {
-            players.remove(enemy);
-            System.out.println("Игрок \"" + enemy.getPlayerName() + "\" потерпел поражение!");
+        if (infoForPrinter != null) {
+            System.out.println(infoForPrinter.massage());
         }
+        GameTranslator.clearConsole();
     }
 
     public void printShoots(Player player, Player enemy, InfoForPrinter infoForPrinter, Position position) {
+        boolean condition;
+        if (infoForPrinter == null) {
+            condition = false;
+        } else {
+            condition = infoForPrinter.condition();
+        }
         Field field = player.getDoubleField();
         Field enemyField = enemy.getDoubleField();
-        boolean condition = infoForPrinter.condition();
-        List<Position> positions = infoForPrinter.positions();
 
-        if (infoForPrinter.positions().isEmpty()) {
+        if (infoForPrinter == null || infoForPrinter.positions().isEmpty()) {
+            //Принт промаха
             shipPrinter.printMiss(field, 2, position);
             shipPrinter.printMiss(enemyField, 1, position);
         } else if (condition) {
+            //Принт попадания
             shipPrinter.printHit(field, 2, position);
             shipPrinter.printHit(enemyField, 1, position);
         } else {
-            for (Position p : positions) {
+            //Принт уничтоженного корабля
+            for (Position p : infoForPrinter.positions()) {
                 shipPrinter.printDestroyedShip(field, 2, p);
                 shipPrinter.printDestroyedShip(enemyField, 1, p);
+            }
+        }
+        massageKeeper.add("Последний выстрел: " + RuCharacters.getCharFromInt(position.x()) + position.y() +
+                " от \"" + player.getPlayerName() +
+                "\" по \"" + enemy.getPlayerName() + "\":");
+        if (infoForPrinter == null || infoForPrinter.positions().isEmpty()) {
+            massageKeeper.add("промах!");
+        } else if (condition) {
+            massageKeeper.add("попадание по кораблю: " + infoForPrinter.shipName() + "!");
+        } else {
+            if (!enemy.getFleet().getCondition()) {
+                players.remove(enemy);
+                massageKeeper.add("флот игрока \"" + enemy.getPlayerName() + "\" уничтожен!");
+            } else {
+                massageKeeper.add("корабль: \"" + infoForPrinter.shipName() + "\" уничтожен!" );
             }
         }
     }
@@ -81,6 +118,7 @@ public class GameHost {
                 System.out.println("Ты сюда уже стрелял!");
                 continue;
             }
+            player.addShotFired(position);
             return position;
         }
     }

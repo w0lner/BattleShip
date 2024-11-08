@@ -38,8 +38,7 @@ public class Fleet {
             }
             return fleetMap.remove(position).hitShip(position);
         } else {
-            System.out.println("Промах!");
-            return new InfoForPrinter(Collections.emptyList(), true);
+            return null;
         }
     }
 

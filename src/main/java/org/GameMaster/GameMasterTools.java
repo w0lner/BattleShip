@@ -43,7 +43,7 @@ public class GameMasterTools {
     public static Position getFieldSize() {
         Position position;
         while (true) {
-            position = ConsoleReader.readCoordinate();
+            position = ConsoleReader.readTwoNum();
             if (position == null) {
                 System.out.println("Ты что то не то ввел, вводи цифры через пробел.");
                 continue;

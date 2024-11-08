@@ -9,15 +9,12 @@ import static org.GameMaster.GameMasterTools.getRandomInt;
 
 public class BotInspector {
     private final Position fieldSize;
-    private final Set<Position> accessiblePos;
-//    private final List<Position> potentialToPlace;
+    private final List<Position> accessiblePos;
 
     public BotInspector(Position fieldSize) {
         this.fieldSize = fieldSize;
-        this.accessiblePos = new HashSet<>();
-//        potentialToPlace = new ArrayList<>();
+        this.accessiblePos = new ArrayList<>();
         feelAccessiblePos();
-//        feelPotentialZones();
     }
 
     private void feelAccessiblePos() {
@@ -26,11 +23,8 @@ public class BotInspector {
                 accessiblePos.add(new Position(x, y));
             }
         }
+        Collections.shuffle(accessiblePos);
     }
-//    private void feelPotentialZones() {
-//        potentialToPlace.addAll(accessiblePos);
-//        Collections.shuffle(potentialToPlace);
-//    }
 
     public Position getRandomAccessiblePos() {
         Position position;
@@ -44,19 +38,11 @@ public class BotInspector {
         return position;
     }
 
-//    public Position getRandomPotentialPos() {
-//        if (potentialToPlace == null || potentialToPlace.isEmpty()) {
-//            return null;
-//        }
-//        return potentialToPlace.removeFirst();
-//    }
 
 
     public void expandCloseZones(List<Position> positions) {
         for (Position p : positions) {
-//            Set<Position> closeZones = getPositionsAreaV2(p, 3);
             accessiblePos.removeAll(getPositionsAreaV2(p, 3));
-//            potentialToPlace.removeAll(closeZones);
         }
     }
 
@@ -77,11 +63,8 @@ public class BotInspector {
         return accessiblePos.contains(position);
     }
 
-    public Set<Position> getAccessiblePos() {
+    public List<Position> getAccessiblePos() {
         return accessiblePos;
     }
 
-//    public List<Position> getPotentialToPlace() {
-//        return potentialToPlace;
-//    }
 }

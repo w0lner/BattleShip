@@ -1,5 +1,7 @@
 package org.GameMaster;
 
+import org.Bot.AutoShipPlacement.AutoShipPlacement;
+import org.Bot.AutoShipPlacement.BotShooter;
 import org.FleetFactory.FleetFactory;
 import org.Utilityes.ConsoleReader;
 import org.Utilityes.Enumerator;
@@ -76,8 +78,7 @@ public class GameMaster {
                 break;
             }
             if (gameMod.equals("pve")) {
-                System.out.println("Режим PvE пока не работает!");
-                setGameMode();
+                gameSettings.setGameMode(gameMod);
                 break;
             }
             System.out.println("Настройка введена неверно!");
@@ -85,11 +86,19 @@ public class GameMaster {
     }
 
     private void arrangement(Player player) {
-        System.out.println("\nИгрок: \"" + player.getPlayerName() + "\" расставляет свои корабли");
-        System.out.println("Кординаты вводятся по одной в формате \"x y\" через пробел цифра/цифра или буква/цифра");
-        FleetFactory fleetFactory = new FleetFactory(player, gameSettings, shipPrinter);
-        fleetFactory.createFleet();
-        GameTranslator.clearConsole();
+        if (player.isBot()) {
+            botArrangement(player);
+        } else {
+            System.out.println("\nИгрок: \"" + player.getPlayerName() + "\" расставляет свои корабли");
+            System.out.println("Кординаты вводятся по одной в формате \"x y\" через пробел цифра/цифра или буква/цифра");
+            FleetFactory fleetFactory = new FleetFactory(player, gameSettings, shipPrinter);
+            fleetFactory.createFleet();
+            GameTranslator.clearConsole();
+        }
+    }
+
+    private void botArrangement(Player bot) {
+        new AutoShipPlacement(gameSettings, shipPrinter, bot);
     }
 
     public void playerRegistration() {
@@ -123,6 +132,8 @@ public class GameMaster {
         GameSettings.addPlayer(bot);
         bot.setSingleField(fieldFactory.getSingleField());
         bot.setDoubleField(fieldFactory.getDoubleField());
+        bot.setBotShooter(new BotShooter(gameSettings.getFieldSize()));
+        bot.setBot(true);
         System.out.println("Бот \"" + botName + "\"" + " создан!");
     }
 }

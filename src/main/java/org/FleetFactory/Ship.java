@@ -2,6 +2,7 @@ package org.FleetFactory;
 
 
 import org.Utilityes.Position;
+import org.Utilityes.RuCharacters;
 
 import java.util.ArrayList;
 
@@ -22,22 +23,23 @@ public class Ship {
     }
 
     public InfoForPrinter destroyShip() {
-        System.out.println("Корабль \"" + shipName + "\" уничтожен!");
-        return new InfoForPrinter(positionList, condition);
+        String massage = "Корабль \"" + shipName + "\" уничтожен!";
+        return new InfoForPrinter(shipName, positionList, condition, massage);
     }
 
     public InfoForPrinter hitShip(Position position) {
         if (positionList.contains(position)) {
             hit();
             if (!(decksNumber <= 0)) {
-                System.out.println("Попадение по кораблю \"" + shipName + "\" выстрелом: " + position);
-                return new InfoForPrinter(Collections.singletonList(position), condition);
+                String massage = "Попадение по кораблю \"" + shipName + "\" выстрелом: " +
+                        RuCharacters.getCharFromInt(position.x()) + position.y();
+                return new InfoForPrinter(shipName, Collections.singletonList(position), condition, massage);
             } else {
                 return destroyShip();
             }
         } else {
             System.out.println("У корабля \"" + shipName + "\" нет позиции: " + position);
-            return new InfoForPrinter(Collections.emptyList(), condition);
+            return null;
         }
     }
 

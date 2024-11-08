@@ -20,8 +20,6 @@ public class BotFleetFactory {
         this.shipPrinter = shipPrinter;
         this.botPathMaker = botPathMaker;
         this.ships = ships;
-        arrangeShips();
-        printFleet();
     }
 
     public void arrangeShips() {

@@ -19,25 +19,16 @@ public class BotPathMaker {
         getPlates();
     }
 
-//    public List<Position> getShipCoordinates(int shipSize) {
-//        Position position = botInspector.getRandomPotentialPos();
-//        if (position == null) {
-//            return null;
-//        }
-//        List<Position> positions = new ArrayList<>(shipSize);
-//        List<Plate> plates = getPlates();
-//        while (!plates.isEmpty()) {
-//            positions.addAll(getNextByPlate(position, plates.removeFirst(), shipSize - 1));
-//            if (positions.size() == shipSize - 1) {
-//                positions.add(position);
-//                botInspector.expandCloseZones(positions);
-//                return positions;
-//            } else {
-//                positions.clear();
-//            }
-//        }
-//        return getShipCoordinates(shipSize);
-//    }
+    public List<Position> getPositions(int shipSize) {
+        for (Position p : botInspector.getAccessiblePos()) {
+            List<Position> positionList = getShipCoordinates(p, shipSize);
+            if (positionList != null) {
+                botInspector.expandCloseZones(positionList);
+                return positionList;
+            }
+        }
+        return null;
+    }
 
     private List<Position> getShipCoordinates(Position position, int shipSize) {
         List<Position> positions = new ArrayList<>(shipSize);
@@ -49,17 +40,6 @@ public class BotPathMaker {
                 return positions;
             } else {
                 positions.clear();
-            }
-        }
-        return null;
-    }
-
-    public List<Position> getPositions(int shipSize) {
-        for (Position p : botInspector.getAccessiblePos()) {
-            List<Position> positionList = getShipCoordinates(p, shipSize);
-            if (positionList != null) {
-                botInspector.expandCloseZones(positionList);
-                return positionList;
             }
         }
         return null;

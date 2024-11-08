@@ -85,8 +85,7 @@ public class ConsoleReader {
     }
 
     public static boolean presenceCheck() {
-        scanner.nextLine();
-        return true;
+        return scanner.hasNextLine();
     }
 
 }
