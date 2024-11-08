@@ -4,6 +4,7 @@ package org.FleetFactory;
 import lombok.Getter;
 import org.Utilityes.Position;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ public class Fleet {
     private int fleetSize = 0;
     @Getter
     private Map<Position, Ship> fleetMap;
+    private boolean condition = true;
 
     public Fleet() {
         this.fleetMap = new HashMap<>();
@@ -28,16 +30,27 @@ public class Fleet {
         );
     }
 
-    public void hitFleet(Position position) {
+    public InfoForPrinter hitFleet(Position position) {
         if (fleetMap.containsKey(position)) {
-            fleetMap.get(position).hitShip(position);
-            fleetMap.remove(position);
-            if (fleetMap.isEmpty()) {
+            hit();
+            if (!condition) {
                 System.out.println("Флот уничтожен!");
             }
+            return fleetMap.remove(position).hitShip(position);
         } else {
-            System.out.println("Промах!");
+            return null;
         }
+    }
+
+    private void hit() {
+        fleetSize--;
+        if (fleetSize <= 0) {
+            condition = false;
+        }
+    }
+
+    public boolean getCondition() {
+        return condition;
     }
 
     @Override

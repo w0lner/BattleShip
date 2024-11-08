@@ -21,49 +21,6 @@ public class PathMaker {
                 .collect(Collectors.toSet());
     }
 
-
-//    public static Map<Utilityes.Position, Utilityes.Direction> makeRightPath(Utilityes.Position position, int decksNumber) {
-//        int x = position.x();
-//        int y = position.y();
-//        return IntStream.range(1, decksNumber + 1)
-//                .mapToObj(i -> Stream.of(
-//                        new AbstractMap.SimpleEntry<>(
-//                                new Utilityes.Position(x - i, y), Utilityes.Direction.LEFT),
-//                        new AbstractMap.SimpleEntry<>(
-//                                new Utilityes.Position(x + i, y), Utilityes.Direction.RIGHT),
-//                        new AbstractMap.SimpleEntry<>(
-//                                new Utilityes.Position(x, y - i), Utilityes.Direction.TOP),
-//                        new AbstractMap.SimpleEntry<>(
-//                                new Utilityes.Position(x, y + i), Utilityes.Direction.DOWN)
-//                ))
-//                .flatMap(p -> p)
-//                .collect(Collectors.toMap(
-//                        Map.Entry::getKey,
-//                        Map.Entry::getValue
-//                ));
-//    }
-
-//    public static Map<Utilityes.Position, Utilityes.Direction> makeWrongPath(Utilityes.Position position, int decksNumber) {
-//        int x = position.x();
-//        int y = position.y();
-//        return IntStream.range(1, decksNumber + 1)
-//                .mapToObj(i -> Stream.of(
-//                        new AbstractMap.SimpleEntry<>(
-//                                new Utilityes.Position(x - i, y - i), Utilityes.Direction.TOP_LEFT),
-//                        new AbstractMap.SimpleEntry<>(
-//                                new Utilityes.Position(x + i, y - i), Utilityes.Direction.TOP_RIGHT),
-//                        new AbstractMap.SimpleEntry<>(
-//                                new Utilityes.Position(x - i, y + i), Utilityes.Direction.DOWN_LEFT),
-//                        new AbstractMap.SimpleEntry<>(
-//                                new Utilityes.Position(x + i, y + i), Utilityes.Direction.DOWN_RIGHT)
-//                ))
-//                .flatMap(p -> p)
-//                .collect(Collectors.toMap(
-//                        Map.Entry::getKey,
-//                        Map.Entry::getValue
-//                ));
-//    }
-
     public static Set<Position> makeSidePath(Position position, int decksNumber) {
         int x = position.x();
         int y = position.y();

@@ -19,28 +19,6 @@ public class Inspector {
         this.shipNames = new HashSet<>();
     }
 
-
-
-//    public void inspectShip(List<Utilityes.Position> positionList) {
-//        int decksNumber = positionList.size() - 1;
-//        for (int i = 1; i < positionList.size(); i++) {
-//            Utilityes.Position p2 = positionList.get(i);
-//            Utilityes.Position p = positionList.get(i - 1);
-//            Map<Utilityes.Position, Utilityes.Direction> ways = Utilityes.PathMaker.makeRightPath(p, decksNumber);
-//            if (ways.containsKey(p2)) {
-//                System.out.println("Палуба " + p2 + " расположилась " + ways.get(p2));
-//            } else {
-//                Map<Utilityes.Position, Utilityes.Direction> wrongWays = Utilityes.PathMaker.makeSidePath(p, decksNumber);
-//                if (wrongWays.containsKey(p2)) {
-//                    System.out.println("Палуба " + p2 + " расположилась боком " + wrongWays.get(p2));
-//                } else {
-//                    System.out.println("Палуба " + p2 + " находится отдельно от корабля!");
-//                }
-//            }
-//            decksNumber--;
-//        }
-//    }
-
     public boolean inspectPosition(Position position) {
         if (position == null) {
             System.out.println("Некорректный ввод координат!");
@@ -64,14 +42,11 @@ public class Inspector {
             shipNames.add(shipName);
             return true;
         }
-//        boolean b = fleet.getFleetMap().values().stream()
-//                .anyMatch(ship -> shipName.equals(ship.getShipName()));
-//        return !b;
     }
 
     public boolean inspectShipSize(Integer shipSize, int decksLeft, GameSettings gameSettings) {
-        int min = gameSettings.getMinShipLength();
-        int max = gameSettings.getMaxShipLength();
+        int min = gameSettings.getMinShipSize();
+        int max = gameSettings.getMaxShipSize();
         if (shipSize == null) {
             System.out.println("Что то ты не то ввел, вводи цифру!");
             return false;

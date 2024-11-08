@@ -89,3 +89,67 @@ package org.example;//Устаревшее
 //            System.out.println();
 //        }
 //    }
+
+//    public void inspectShip(List<Utilityes.Position> positionList) {
+//        int decksNumber = positionList.size() - 1;
+//        for (int i = 1; i < positionList.size(); i++) {
+//            Utilityes.Position p2 = positionList.get(i);
+//            Utilityes.Position p = positionList.get(i - 1);
+//            Map<Utilityes.Position, Utilityes.Direction> ways = Utilityes.PathMaker.makeRightPath(p, decksNumber);
+//            if (ways.containsKey(p2)) {
+//                System.out.println("Палуба " + p2 + " расположилась " + ways.get(p2));
+//            } else {
+//                Map<Utilityes.Position, Utilityes.Direction> wrongWays = Utilityes.PathMaker.makeSidePath(p, decksNumber);
+//                if (wrongWays.containsKey(p2)) {
+//                    System.out.println("Палуба " + p2 + " расположилась боком " + wrongWays.get(p2));
+//                } else {
+//                    System.out.println("Палуба " + p2 + " находится отдельно от корабля!");
+//                }
+//            }
+//            decksNumber--;
+//        }
+//    }
+
+//PathMaker
+
+//    public static Map<Utilityes.Position, Utilityes.Direction> makeRightPath(Utilityes.Position position, int decksNumber) {
+//        int x = position.x();
+//        int y = position.y();
+//        return IntStream.range(1, decksNumber + 1)
+//                .mapToObj(i -> Stream.of(
+//                        new AbstractMap.SimpleEntry<>(
+//                                new Utilityes.Position(x - i, y), Utilityes.Direction.LEFT),
+//                        new AbstractMap.SimpleEntry<>(
+//                                new Utilityes.Position(x + i, y), Utilityes.Direction.RIGHT),
+//                        new AbstractMap.SimpleEntry<>(
+//                                new Utilityes.Position(x, y - i), Utilityes.Direction.TOP),
+//                        new AbstractMap.SimpleEntry<>(
+//                                new Utilityes.Position(x, y + i), Utilityes.Direction.DOWN)
+//                ))
+//                .flatMap(p -> p)
+//                .collect(Collectors.toMap(
+//                        Map.Entry::getKey,
+//                        Map.Entry::getValue
+//                ));
+//    }
+
+//    public static Map<Utilityes.Position, Utilityes.Direction> makeWrongPath(Utilityes.Position position, int decksNumber) {
+//        int x = position.x();
+//        int y = position.y();
+//        return IntStream.range(1, decksNumber + 1)
+//                .mapToObj(i -> Stream.of(
+//                        new AbstractMap.SimpleEntry<>(
+//                                new Utilityes.Position(x - i, y - i), Utilityes.Direction.TOP_LEFT),
+//                        new AbstractMap.SimpleEntry<>(
+//                                new Utilityes.Position(x + i, y - i), Utilityes.Direction.TOP_RIGHT),
+//                        new AbstractMap.SimpleEntry<>(
+//                                new Utilityes.Position(x - i, y + i), Utilityes.Direction.DOWN_LEFT),
+//                        new AbstractMap.SimpleEntry<>(
+//                                new Utilityes.Position(x + i, y + i), Utilityes.Direction.DOWN_RIGHT)
+//                ))
+//                .flatMap(p -> p)
+//                .collect(Collectors.toMap(
+//                        Map.Entry::getKey,
+//                        Map.Entry::getValue
+//                ));
+//    }

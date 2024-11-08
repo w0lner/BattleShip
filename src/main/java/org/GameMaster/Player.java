@@ -1,11 +1,14 @@
 package org.GameMaster;
+import org.Bot.AutoShipPlacement.BotShooter;
 import org.FleetFactory.Fleet;
 import org.FleetFactory.InfoForPrinter;
+import org.Utilityes.MassageKeeper;
 import org.Utilityes.Position;
 import org.fieldsFactory.Field;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Player {
     private String playerName;
@@ -13,7 +16,9 @@ public class Player {
     private int fleetSize;
     private Field singleField;
     private Field doubleField;
-    private List<Position> shootsFired;
+    private final List<Position> shootsFired;
+    private boolean isBot = false;
+    private BotShooter botShooter;
 
     public Player(String playerName, int fleetSize) {
         this.shootsFired = new ArrayList<>();
@@ -24,6 +29,10 @@ public class Player {
 
     public InfoForPrinter hit(Position position) {
         return fleet.hitFleet(position);
+    }
+
+    public void addShotFired(Position position) {
+        this.shootsFired.add(position);
     }
 
 
@@ -69,5 +78,42 @@ public class Player {
 
     public List<Position> getShootsFired() {
         return shootsFired;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(playerName, player.playerName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(playerName);
+    }
+
+    public Position getBotLastShot() {
+        return botShooter.getLastShot();
+    }
+
+    public InfoForPrinter botLastInfo() {
+         return botShooter.getLastInfo();
+    }
+
+    public void botShot(Player enemy) {
+        botShooter.shot(enemy);
+    }
+
+    public void setBotShooter(BotShooter botShooter) {
+        this.botShooter = botShooter;
+    }
+
+    public boolean isBot() {
+        return isBot;
+    }
+
+    public void setBot(boolean bot) {
+        isBot = bot;
     }
 }

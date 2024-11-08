@@ -1,5 +1,7 @@
 package org.GameMaster;
 
+import static org.GameMaster.GameMasterTools.getRandomInt;
+
 public class Turn {
     private int moveCounter = -1;
     private final int[] moveOrder;
@@ -22,7 +24,7 @@ public class Turn {
         int cube;
         for (int i = moveOrder.length - 1; i > 0; i --) {
             temp = moveOrder[i];
-            cube = Cube.getRandom(0, i);
+            cube = getRandomInt(0, i);
             moveOrder[i] = moveOrder[cube];
             moveOrder[cube] = temp;
         }

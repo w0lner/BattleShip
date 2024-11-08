@@ -14,7 +14,4 @@ public enum Plate {
         }
         return TL_DR;
     }
-    public static boolean checkPlate(Position p1, Position p2, Plate plate) {
-        return plate == Plate.findPlate(p1, p2);
-    }
 }

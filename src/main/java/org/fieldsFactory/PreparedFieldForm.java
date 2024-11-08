@@ -3,10 +3,10 @@ package org.fieldsFactory;
 import org.Utilityes.ConsoleReader;
 import org.Utilityes.Position;
 
-public enum PreparedForms {
+public enum PreparedFieldForm {
     Small, Medium, Large, Custom;
 
-    public FieldParameters get(int countX, int countY, PreparedForms preparedForm) {
+    public FieldParameters getFieldParameters(int countX, int countY, PreparedFieldForm preparedForm) {
         switch (preparedForm) {
             case Small -> {
                 return small(countX, countY);
@@ -41,7 +41,7 @@ public enum PreparedForms {
         System.out.println("Введи масштаб X(n) и Y(n)");
         System.out.println("Рекомендуется от 4 1 до 10 2");
         while (true) {
-            position = ConsoleReader.readPos();
+            position = ConsoleReader.readCoordinate();
             if (position == null) {
                 System.out.println("Попробуй ещё раз");
                 continue;

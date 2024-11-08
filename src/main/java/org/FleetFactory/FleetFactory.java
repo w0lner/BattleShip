@@ -54,7 +54,7 @@ public class FleetFactory {
         Position position;
         while (true) {
             System.out.println("Координаты палубы: ");
-            position = ConsoleReader.readPos();
+            position = ConsoleReader.readCoordinate();
             if (!inspector.inspectPosition(position)) {
                 continue;
             }
@@ -63,7 +63,6 @@ public class FleetFactory {
             }
             return position;
         }
-
     }
 
     private boolean checkPos(Position position) {

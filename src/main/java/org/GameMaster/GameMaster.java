@@ -1,13 +1,14 @@
 package org.GameMaster;
 
+import org.Bot.AutoShipPlacement.AutoShipPlacement;
+import org.Bot.AutoShipPlacement.BotShooter;
 import org.FleetFactory.FleetFactory;
 import org.Utilityes.ConsoleReader;
-import org.Utilityes.Position;
+import org.Utilityes.Enumerator;
 import org.fieldsFactory.FieldFactory;
-import org.fieldsFactory.PreparedForms;
 import org.shipsFactory.ShipPrinter;
 
-import java.util.Random;
+import static org.GameMaster.GameMasterTools.*;
 
 public class GameMaster {
 
@@ -29,34 +30,42 @@ public class GameMaster {
     private void startGame() {
         System.out.println("Да начнется игра !");
         Game game = new Game(gameSettings, shipPrinter);
+        game.start();
     }
 
     private void gameSetup() {
         setGameMode();
         setFieldParam();
-        shipPrinter = new ShipPrinter(gameSettings.getFieldParameters(), gameSettings.getDoubleFieldParameters());
-        fieldFactory = new FieldFactory(gameSettings.getFieldParameters(), gameSettings.getDoubleFieldParameters());
+        registrationParticipants();
+        shipPlacement();
+    }
+
+    private void shipPlacement() {
+        for (Player p : GameSettings.getPlayers()) {
+            arrangement(p);
+        }
+    }
+
+    private void registrationParticipants() {
         if (gameSettings.getGameMode().equals("pvp")) {
             playerRegistration();
             playerRegistration();
             GameTranslator.clearConsole();
-        } else {
+        } else if (gameSettings.getGameMode().equals("pve")){
             playerRegistration();
+            botRegistration();
             GameTranslator.clearConsole();
         }
-        for (Player p : GameSettings.getPlayers()) {
-            arrangement(p);
-        }
-
     }
-
 
     private void setFieldParam() {
         System.out.println("Размер поля ? x(n) на y(n) клеток");
         gameSettings.setFieldSize(getFieldSize());
         System.out.println("Масштаб поля ? small/medium/large/custom");
-        gameSettings.setPreparedForms(getFieldScale());
+        gameSettings.setPreparedFieldForm(getFieldScale());
         gameSettings.setFieldParam();
+        shipPrinter = new ShipPrinter(gameSettings.getFieldParameters(), gameSettings.getDoubleFieldParameters());
+        fieldFactory = new FieldFactory(gameSettings.getFieldParameters(), gameSettings.getDoubleFieldParameters());
     }
 
     private void setGameMode() {
@@ -69,141 +78,62 @@ public class GameMaster {
                 break;
             }
             if (gameMod.equals("pve")) {
-                System.out.println("Режим PvE пока не работает!");
-                setGameMode();
-//                gameSettings.setGameMode(gameMod);
-//                break;
+                gameSettings.setGameMode(gameMod);
+                break;
             }
             System.out.println("Настройка введена неверно!");
         }
     }
 
-    private void PvP() {
-
-    }
-
-    private void PvE() {
-        System.out.println("PvE пока не работает!");
-        setGameMode();
-    }
-
     private void arrangement(Player player) {
-        System.out.println("\nИгрок: \"" + player.getPlayerName() + "\" расставляет свои корабли");
-        System.out.println("Кординаты вводятся по одной в формате \"x y\" через пробел цифра/цифра или буква/цифра");
-        FleetFactory fleetFactory = new FleetFactory(player, gameSettings, shipPrinter);
-        fleetFactory.createFleet();
-        GameTranslator.clearConsole();
-    }
-
-    public int getFleetSize() {
-        Integer fleetHealth;
-        while (true) {
-            fleetHealth = ConsoleReader.readInt();
-            if (fleetHealth == null) {
-                System.out.println("Что то ты не то ввел, вводи цифру!");
-            } else if (fleetHealth > 30){
-                System.out.println("Давай по меньше..");
-            } else if (fleetHealth == 0){
-                System.out.println("Вот и поиграли ?");
-            } else if (fleetHealth < 0){
-                System.out.println("Умножу на -1");
-                System.out.flush();
-                return fleetHealth * -1;
-            } else {
-                return fleetHealth;
-            }
+        if (player.isBot()) {
+            botArrangement(player);
+        } else {
+            System.out.println("\nИгрок: \"" + player.getPlayerName() + "\" расставляет свои корабли");
+            System.out.println("Кординаты вводятся по одной в формате \"x y\" через пробел цифра/цифра или буква/цифра");
+            FleetFactory fleetFactory = new FleetFactory(player, gameSettings, shipPrinter);
+            fleetFactory.createFleet();
+            GameTranslator.clearConsole();
         }
     }
 
-    public String getPlayerName() {
-        String playerName;
-        while (true) {
-            playerName = ConsoleReader.readLine();
-            if (playerName == null) {
-                System.out.println("Имя не определено!");
-                continue;
-            }
-            if (playerName.isBlank() || playerName.isEmpty()) {
-                System.out.println("Имя должно содержать символы!");
-                continue;
-            }
-            if (!GameSettings.checkName(playerName)) {
-                System.out.println("Имя \"" + playerName + "\" уже занято!");
-                continue;
-            }
-            return playerName;
-        }
-    }
-
-    private Position getFieldSize() {
-        Position position;
-        while (true) {
-            position = ConsoleReader.readPos();
-            if (position == null) {
-                System.out.println("Ты что то не то ввел, вводи цифры через пробел.");
-                continue;
-            }
-            if (position.x() > 30 || position.y() > 30) {
-                System.out.println("Максимальный размер поля: 30 на 30");
-                continue;
-            }
-            if (position.x() < 4 || position.y() < 4) {
-                System.out.println("Минимальный размер поля: 4 на 4");
-                continue;
-            }
-            return position;
-        }
-    }
-
-    public PreparedForms getFieldScale() {
-        String fieldScale;
-        PreparedForms preparedForms;
-        while (true) {
-            fieldScale = ConsoleReader.readLine().toLowerCase();
-            switch (fieldScale) {
-                case "small":
-                    preparedForms = PreparedForms.Small;
-                    break;
-                case "medium":
-                    preparedForms = PreparedForms.Medium;
-                    break;
-                case "large":
-                    preparedForms = PreparedForms.Large;
-                    break;
-                case "custom":
-                    preparedForms = PreparedForms.Custom;
-                    break;
-                default:
-                    System.out.println("Ты что то не то ввел, доступные команды: small/medium/large/custom");
-                    continue;
-            }
-            return preparedForms;
-        }
+    private void botArrangement(Player bot) {
+        new AutoShipPlacement(gameSettings, shipPrinter, bot);
     }
 
     public void playerRegistration() {
-        Player player;
-        if (GameSettings.getPlayers().isEmpty()) {
-            System.out.println("Первый игрок назови себя");
-        } else if (GameSettings.getPlayers().size() == 1) {
-            System.out.println("Второй игрок назови себя");
-        }
-        String playerName = getPlayerName();
+        //Перый, Второй , Третий и.т.д
+        String playerNumber = Enumerator.getEnum(gameSettings.getPlayersList().size() + 1);
+        System.out.println(playerNumber + " игрок назови себя:");
+        String playerName = getPlayerName(gameSettings.getPlayersList());
         System.out.println("Насколько большой будет твой флот?");
         int fleetHealth = getFleetSize();
-        player = new Player(playerName, fleetHealth);
+        Player player = new Player(playerName, fleetHealth);
         GameSettings.addPlayer(player);
         player.setSingleField(fieldFactory.getSingleField());
         player.setDoubleField(fieldFactory.getDoubleField());
         System.out.println("Игрок \"" + playerName + "\"" + " зарегистрирован!");
     }
 
-    private Position getShipsSize() {
-        Position position;
+    public void botRegistration() {
+        String botName = "bot";
+        int botNumber = 0;
         while (true) {
-            System.out.println("Размер кораблей?");
-            position = ConsoleReader.readPos();
+            if (!checkName(gameSettings.getPlayersList(), botName)) {
+                botNumber++;
+                botName = "bot_" + botNumber;
+            } else {
+                break;
+            }
         }
+        System.out.println("Выбери размер кораблей у " + botName);
+        int fleetSize = getFleetSize();
+        Player bot = new Player(botName, fleetSize);
+        GameSettings.addPlayer(bot);
+        bot.setSingleField(fieldFactory.getSingleField());
+        bot.setDoubleField(fieldFactory.getDoubleField());
+        bot.setBotShooter(new BotShooter(gameSettings.getFieldSize()));
+        bot.setBot(true);
+        System.out.println("Бот \"" + botName + "\"" + " создан!");
     }
-
 }

@@ -2,39 +2,52 @@ package org.FleetFactory;
 
 
 import org.Utilityes.Position;
+import org.Utilityes.RuCharacters;
 
 import java.util.ArrayList;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
 public class Ship {
     private final String shipName;
     private int decksNumber;
-    private List<Position> positionList;
+    private final List<Position> positionList;
     private boolean condition = true;
 
     public Ship(String shipName, int decksNumber) {
         this.decksNumber = decksNumber;
         this.shipName = shipName;
-        this.positionList = new ArrayList<>();
+        this.positionList = new ArrayList<>(decksNumber);
     }
 
-    public void destroyShip() {
-        this.condition = false;
-        System.out.println("Корабль \"" + shipName + "\" уничтожен!");
+    public InfoForPrinter destroyShip() {
+        String massage = "Корабль \"" + shipName + "\" уничтожен!";
+        return new InfoForPrinter(shipName, positionList, condition, massage);
     }
 
-    public void hitShip(Position position) {
+    public InfoForPrinter hitShip(Position position) {
         if (positionList.contains(position)) {
-            positionList.remove(position);
-            if (!positionList.isEmpty()) {
-                System.out.println("Попадение по кораблю \"" + shipName + "\" выстрелом: " + position);
+            hit();
+            if (!(decksNumber <= 0)) {
+                String massage = "Попадение по кораблю \"" + shipName + "\" выстрелом: " +
+                        RuCharacters.getCharFromInt(position.x()) + position.y();
+                return new InfoForPrinter(shipName, Collections.singletonList(position), condition, massage);
             } else {
-                destroyShip();
+                return destroyShip();
             }
         } else {
             System.out.println("У корабля \"" + shipName + "\" нет позиции: " + position);
+            return null;
+        }
+    }
+
+
+    private void hit() {
+        decksNumber--;
+        if (decksNumber <= 0) {
+            condition = false;
         }
     }
 
@@ -60,6 +73,10 @@ public class Ship {
 
     public List<Position> getPositionList() {
         return positionList;
+    }
+
+    public void setPositionList(List<Position> positionList) {
+        this.positionList.addAll(positionList);
     }
 
     @Override
